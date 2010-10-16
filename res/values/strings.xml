@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, aipe!</string>
     <string name="app_name">Android Image Processing Engine</string>
+<string name="select">Select Trans.</string>
 </resources>
