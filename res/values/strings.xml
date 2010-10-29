@@ -2,8 +2,8 @@
 <resources>
     <string name="hello">Hello World, aipe!</string>
     <string name="app_name">A.I.P.E</string>
-<string name="select">Select Transform</string>
-<string name="process">Process Image</string>
+<string name="load">Load Image</string>
+
 <string name="reset">Reset Image</string>
 <string name="aipe">AIPE</string>
 </resources>
