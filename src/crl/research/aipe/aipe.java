@@ -1,6 +1,7 @@
 package crl.research.aipe;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -64,4 +65,10 @@ public class aipe extends Activity {
 			}
 		}
     };
+    
+    public native void negative(Bitmap bmp);
+    
+    static {
+    	System.loadLibrary("aipe");
+    }
 }
