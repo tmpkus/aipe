@@ -18,5 +18,6 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := aipe
 LOCAL_SRC_FILES := aipe.c
+LOCAL_LDLIBS    := -lm -llog -ljnigraphics
 
 include $(BUILD_SHARED_LIBRARY)
