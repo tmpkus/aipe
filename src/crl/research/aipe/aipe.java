@@ -21,6 +21,7 @@ public class aipe extends Activity {
 	String[] transformList = {"", "Negative","B/W", "FFT"};
 	Bitmap mBitmap;
 	ImageView iv1;
+	int Position;
 	
     /** Called when the activity is first created. */
     @Override
@@ -39,6 +40,7 @@ public class aipe extends Activity {
         btn1.setOnClickListener(mLoadImageListener);
         btn2.setOnClickListener(mResetListener);
         spin.setOnItemSelectedListener(mSpinListener);
+        //spin.setOnClickListener(mSpinClickListener);
         
         ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, transformList);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -59,7 +61,9 @@ public class aipe extends Activity {
     OnClickListener mResetListener = new OnClickListener(){
     	public void onClick(View v){
     		//((Toast)Toast.makeText(getBaseContext(), "Reset Image (Coming Soon!)", Toast.LENGTH_SHORT)).show();
-    		mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.lena);
+    		BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
+    		mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.lena,opts);
     		iv1.setImageBitmap(mBitmap);
     	}
     };
@@ -70,15 +74,29 @@ public class aipe extends Activity {
     	}
 
 		public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-			if (transformList[position] != ""){
-				((Toast)Toast.makeText(getBaseContext(), transformList[position]+" Transform (Coming Soon!)", Toast.LENGTH_SHORT)).show();
-			}
-			if (transformList[position] == "Negative"){
+//			if (transformList[position] != ""){
+//				((Toast)Toast.makeText(getBaseContext(), transformList[position]+" Transform (Coming Soon!)", Toast.LENGTH_SHORT)).show();
+//			}
+			Position = position;
+			if (transformList[Position] == "Negative"){
 				//((Toast)Toast.makeText(getBaseContext(), mBitmap.getConfig().toString(), Toast.LENGTH_SHORT)).show();
 				negative(mBitmap);
 				iv1.setImageBitmap(mBitmap);
 			}
 		}
+    };
+    
+    OnClickListener mSpinClickListener = new OnClickListener(){
+
+		public void onClick(View v) {
+			if (transformList[Position] == "Negative"){
+				//((Toast)Toast.makeText(getBaseContext(), mBitmap.getConfig().toString(), Toast.LENGTH_SHORT)).show();
+				negative(mBitmap);
+				iv1.setImageBitmap(mBitmap);
+			}
+			
+		}
+    	
     };
     
     public native void negative(Bitmap bmp);
