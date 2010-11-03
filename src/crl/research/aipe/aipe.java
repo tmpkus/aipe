@@ -43,8 +43,10 @@ public class aipe extends Activity {
         ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, transformList);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         
-        spin.setAdapter(aa);      
-        mBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.lena);
+        spin.setAdapter(aa);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        mBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.lena,opts);
         
      }
     
@@ -56,7 +58,9 @@ public class aipe extends Activity {
         
     OnClickListener mResetListener = new OnClickListener(){
     	public void onClick(View v){
-    		((Toast)Toast.makeText(getBaseContext(), "Reset Image (Coming Soon!)", Toast.LENGTH_SHORT)).show();
+    		//((Toast)Toast.makeText(getBaseContext(), "Reset Image (Coming Soon!)", Toast.LENGTH_SHORT)).show();
+    		mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.lena);
+    		iv1.setImageBitmap(mBitmap);
     	}
     };
     
@@ -70,7 +74,7 @@ public class aipe extends Activity {
 				((Toast)Toast.makeText(getBaseContext(), transformList[position]+" Transform (Coming Soon!)", Toast.LENGTH_SHORT)).show();
 			}
 			if (transformList[position] == "Negative"){
-				((Toast)Toast.makeText(getBaseContext(), mBitmap.getConfig().toString(), Toast.LENGTH_SHORT)).show();
+				//((Toast)Toast.makeText(getBaseContext(), mBitmap.getConfig().toString(), Toast.LENGTH_SHORT)).show();
 				negative(mBitmap);
 				iv1.setImageBitmap(mBitmap);
 			}

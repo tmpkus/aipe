@@ -1,5 +1,5 @@
-/Users/malonso1/Dropbox/Research/aipe/obj/local/armeabi/objs/aipe/aipe.o: \
- /Users/malonso1/Dropbox/Research/aipe/jni/aipe.c \
+/Volumes/Users/Research/Research_Topics/aipe/obj/local/armeabi/objs/aipe/aipe.o: \
+ /Volumes/Users/Research/Research_Topics/aipe/jni/aipe.c \
  /Applications/android-ndk-r4b/build/platforms/android-8/arch-arm/usr/include/jni.h \
  /Applications/android-ndk-r4b/build/platforms/android-8/arch-arm/usr/include/time.h \
  /Applications/android-ndk-r4b/build/platforms/android-8/arch-arm/usr/include/sys/cdefs.h \
