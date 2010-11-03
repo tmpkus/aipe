@@ -21,7 +21,7 @@
 #define NATIVE_FUNCTION(type, name) JNIEXPORT type JNICALL Java_crl_research_aipe_aipe_ ## name
 
 static void negative(AndroidBitmapInfo* info, void* pixels){
-	int xx,yy, red = 0, green, blue;
+	int xx,yy, red, green, blue;
 	uint32_t* line;
 
 	for(yy = 0; yy < info->height; yy++){
@@ -37,6 +37,28 @@ static void negative(AndroidBitmapInfo* info, void* pixels){
 		}
 		pixels = (char*)pixels + info->stride;
 	}
+}
+
+static void bw(AndroidBitmapInfo* info, void* pixels){
+	int xx, yy, red, green, blue, L;
+	uint32_t* line;
+	for(yy = 0; yy < info->height; yy++){
+			line = (uint32_t*)pixels;
+			for(xx =0; xx < info->width; xx++){
+				red = (int) ((line[xx] & 0x00FF0000) >> 16);
+				green = (int)((line[xx] & 0x0000FF00) >> 8);
+				blue = (int) (line[xx] & 0x00000FF );
+				// BW transform: L = 0.299R + 0.587G + 0.114B
+				L = 0.299*red + 0.587*green + 0.114*blue;
+
+				red = green = blue = L;
+
+				line[xx]= 	((red << 16) & 0x00FF0000 ) |
+							((green << 8) & 0x0000FF00) |
+							( (blue ) & 0x000000FF);
+			}
+			pixels = (char*)pixels + info->stride;
+		}
 }
 
 NATIVE_FUNCTION(void, negative)(JNIEnv * env, jobject  obj, jobject bitmap) {
@@ -58,9 +80,37 @@ NATIVE_FUNCTION(void, negative)(JNIEnv * env, jobject  obj, jobject bitmap) {
         LOGE("AndroidBitmap_lockPixels() failed ! error=%d", ret);
     }
 
-    // do negative of image
+    // compute negative of image
     negative(&info,pixels);
 
     AndroidBitmap_unlockPixels(env, bitmap);
 
 }
+
+NATIVE_FUNCTION(void, bw)(JNIEnv * env, jobject  obj, jobject bitmap) {
+
+    AndroidBitmapInfo  info;
+    int ret;
+    void* pixels;
+
+    if ((ret = AndroidBitmap_getInfo(env, bitmap, &info)) < 0) {
+            LOGE("AndroidBitmap_getInfo() failed ! error=%d", ret);
+            return;
+        }
+    if (info.format != ANDROID_BITMAP_FORMAT_RGBA_8888) {
+        LOGE("Bitmap format is not RGBA_8888 !");
+        return;
+    }
+
+    if ((ret = AndroidBitmap_lockPixels(env, bitmap, &pixels)) < 0) {
+        LOGE("AndroidBitmap_lockPixels() failed ! error=%d", ret);
+    }
+
+    // make image black and white
+    bw(&info,pixels);
+
+    AndroidBitmap_unlockPixels(env, bitmap);
+
+}
+
+

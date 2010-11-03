@@ -83,6 +83,11 @@ public class aipe extends Activity {
 				negative(mBitmap);
 				iv1.setImageBitmap(mBitmap);
 			}
+			if (transformList[Position] == "B/W"){
+				//((Toast)Toast.makeText(getBaseContext(), mBitmap.getConfig().toString(), Toast.LENGTH_SHORT)).show();
+				bw(mBitmap);
+				iv1.setImageBitmap(mBitmap);
+			}
 		}
     };
     
@@ -100,6 +105,8 @@ public class aipe extends Activity {
     };
     
     public native void negative(Bitmap bmp);
+    
+    public native void bw(Bitmap bmp);
     
     static {
     	System.loadLibrary("aipe");
